@@ -4,6 +4,7 @@ import About from '../views/About.vue';
 import Cart from '../views/Cart.vue';
 import ItemDetail from '../views/Items/ItemDetail.vue';
 import NoFound from '../views/NoFound.vue';
+import Order from '../views/Order.vue';
 const routes = [
   { path: '/', name: 'Home', component: Home },
   { path: '/about', name: 'About', component: About },
@@ -14,6 +15,7 @@ const routes = [
     component: ItemDetail,
     props: true,
   },
+  { path: '/order', name: 'Order', component: Order },
 
   //404
   {

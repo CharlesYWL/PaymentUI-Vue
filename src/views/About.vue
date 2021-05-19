@@ -1,6 +1,6 @@
 <!-- The `template` of MyComponent-->
 <template>
-  <div>About</div>
+  <div>This is a simple Stripe Test Build by Vue</div>
 </template>
 
 <!-- The `data` and `methods` are defiend in script tag-->

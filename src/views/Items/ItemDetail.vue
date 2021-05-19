@@ -12,10 +12,10 @@
         />
         <div class="description">
           <h3>{{ item.name }}</h3>
-          <h5>{{ item.data.unit_amount }}</h5>
+          <h5>{{ centToDollar(item.data.unit_amount) }}</h5>
         </div>
       </div>
-      <Button type="button" class="p-px-3" @click="handleClick()">
+      <Button type="button" class="p-px-3 stripe-btn" @click="handleClick()">
         <img class="btn-icon" src="/img/stripe-logo-blue.png" />
       </Button>
     </section>
@@ -33,7 +33,7 @@ import { request } from '../../utils/apiUtils';
 import { reactive } from 'vue';
 import { loadStripe } from '@stripe/stripe-js';
 
-import utiMixin from '../../utils/helper';
+import useUti from '../../utils/useUti';
 
 const stripePromise = loadStripe(
   'pk_test_51IZipEIbg2Wdh6h2Czeqs7j35oIHGaPgFiWzjdR6mqdnX0Qwbx3PTPJEDYFXw6p8aM7lgRCSpnNRlhuKhzP6bepL00X7tqXf2a'
@@ -64,7 +64,7 @@ export default {
     async handleClick() {
       let stripe = await stripePromise;
       request
-        .post('/stripe/create-checkout-session-single', {
+        .post('/stripe/create-checkout-session-single-vue', {
           id: this.itemId,
           quantity: 1,
         })
@@ -79,11 +79,14 @@ export default {
         });
     },
   },
-  mixins: [utiMixin],
   mounted() {
     this.fetchItem().then(() => {
       console.log(!!this.item, this.isLoading);
     });
+  },
+  setup() {
+    const { centToDollar } = useUti();
+    return { centToDollar };
   },
 };
 </script>
@@ -97,5 +100,8 @@ export default {
 .btn-icon {
   height: 35px;
   object-fit: scale-down;
+}
+.stripe-btn {
+  background-color: white !important;
 }
 </style>

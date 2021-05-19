@@ -56,7 +56,7 @@ export default {
     },
     fetchItems() {
       request
-        .get('./stripe/get-goods')
+        .get('/stripe/get-goods')
         .then((res) => {
           console.log(res.itemList);
           this.goods = res.itemList;
