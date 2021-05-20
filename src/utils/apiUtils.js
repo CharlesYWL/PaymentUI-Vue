@@ -7,7 +7,7 @@ const responseBody = (response) => {
     });
   } else return response.json();
 };
-export const getHeader = () => {
+const getHeader = () => {
   const tokenId =
     localStorage.getItem('tokenId') || sessionStorage.getItem('tokenId');
   return {
@@ -50,4 +50,13 @@ const request = {
   // },
 };
 
-export { request };
+// api part
+const getItem = (item) => {
+  return request.get(`/stripe/get-goods/${item}`);
+};
+
+const getAllItems = () => {
+  return request.get('/stripe/get-goods');
+};
+
+export { request, getItem, getAllItems };

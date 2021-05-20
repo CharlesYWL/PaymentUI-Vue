@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { request } from '../../utils/apiUtils';
+import { getItem, request } from '../../utils/apiUtils';
 import { reactive } from 'vue';
 import { loadStripe } from '@stripe/stripe-js';
 
@@ -50,8 +50,7 @@ export default {
   },
   methods: {
     fetchItem() {
-      return request
-        .get(`/stripe/get-goods/${this.itemId}`)
+      return getItem(this.itemId)
         .then((res) => {
           console.log(res);
           this.item = res;

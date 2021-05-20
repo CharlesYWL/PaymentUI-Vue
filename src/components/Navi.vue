@@ -10,9 +10,13 @@
     <div class="navi-option">
       <div v-for="path in naviOption" :key="path">
         <router-link :to="path.url" class="navi-link">
-          <Button :class="{ 'correct-path': isActive(path.url) }">
-            {{ path.name }}
-          </Button>
+          <Button
+            type="button"
+            :class="{ 'correct-path': isActive(path.url) }"
+            :badge="path.name === 'Cart' ? cartNumber.toString() : ''"
+            :label="path.name"
+            :icon="path.icon"
+          />
         </router-link>
       </div>
     </div>
@@ -25,12 +29,13 @@ export default {
   data: function() {
     return {
       naviOption: [
-        { name: 'Home', url: '/' },
-        { name: 'About', url: '/about' },
-        { name: 'Cart', url: '/cart' },
+        { name: 'Home', url: '/', icon: 'pi pi-home' },
+        { name: 'About', url: '/about', icon: 'pi pi-info-circle' },
+        { name: 'Cart', url: '/cart', icon: 'pi pi-shopping-cart' },
       ],
     };
   },
+  props: ['cart'],
   components: {},
   methods: {
     isActive: function(url) {
@@ -42,7 +47,18 @@ export default {
       this.$router.push(url);
     },
   },
-  computed: {},
+  computed: {
+    cartNumber() {
+      if (typeof this.cart === 'object' && this.cart !== null) {
+        return Object.keys(this.cart).reduce(
+          (sum, key) => sum + this.cart[key] || 0,
+          0
+        );
+      }
+
+      return 0;
+    },
+  },
 };
 </script>
 

@@ -1,19 +1,29 @@
 <template>
   <div>
-    <Navi></Navi>
-    <router-view></router-view>
+    <Navi :cart="cart"></Navi>
+    <router-view
+      @addToCart="addToCart"
+      :cart="cart"
+      @removeFromCart="removeFromCart"
+    ></router-view>
   </div>
 </template>
 
 <script>
 import Navi from './components/Navi';
-
+import useCart from './composables/cart';
 export default {
   name: 'App',
   data: function() {
-    return { msg: 'Hello' };
+    return {};
   },
   components: { Navi },
+  methods: {},
+  setup() {
+    const { cart, addToCart, removeFromCart } = useCart();
+
+    return { cart, addToCart, removeFromCart };
+  },
 };
 </script>
 

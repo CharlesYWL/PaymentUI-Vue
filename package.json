@@ -10,6 +10,7 @@
   "dependencies": {
     "@stripe/stripe-js": "^1.15.0",
     "core-js": "^3.6.5",
+    "lodash": "^4.17.21",
     "primeicons": "^4.1.0",
     "primevue": "^3.3.5",
     "vue": "^3.0.0",

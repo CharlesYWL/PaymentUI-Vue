@@ -14,12 +14,24 @@
           <template #title>
             {{ good.name }}
           </template>
+          <template #content>
+            {{ centToDollar(good.data.unit_amount) }}
+          </template>
           <template #footer>
-            <router-link
-              :to="{ name: 'ItemDetail', params: { itemId: good.name } }"
-            >
-              <Button icon="pi pi-check" label="Purchase" />
-            </router-link>
+            <div class="buy-buttons">
+              <router-link
+                :to="{ name: 'ItemDetail', params: { itemId: good.name } }"
+                class="btn"
+              >
+                <Button icon="pi pi-shopping-cart" label="Buy Now" />
+              </router-link>
+              <Button
+                icon="pi pi-plus-circle"
+                label="Add to cart"
+                class="btn"
+                @click="$emit('addToCart', good.name)"
+              />
+            </div>
           </template>
         </Card>
       </div>
@@ -37,8 +49,8 @@
 <script>
 import { reactive } from 'vue';
 import Card from 'primevue/card';
-import { request } from '../utils/apiUtils';
-// import { onMounted } from 'vue';
+import { getAllItems } from '../utils/apiUtils';
+import useUti from '../utils/useUti';
 
 export default {
   name: 'Home',
@@ -55,10 +67,8 @@ export default {
       console.log(itemId);
     },
     fetchItems() {
-      request
-        .get('/stripe/get-goods')
+      getAllItems()
         .then((res) => {
-          console.log(res.itemList);
           this.goods = res.itemList;
           this.isLoading = false;
         })
@@ -69,6 +79,10 @@ export default {
   },
   mounted() {
     this.fetchItems();
+  },
+  setup() {
+    const { centToDollar } = useUti();
+    return { centToDollar };
   },
 };
 </script>
@@ -88,4 +102,13 @@ p
     align-items: center
 .good
   margin: 10px
+.buy-buttons
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+.btn
+  width: fit-content
+  margin: auto
+  margin-top: 10px
 </style>
