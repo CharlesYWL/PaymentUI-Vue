@@ -31,13 +31,13 @@
 <script>
 import { getItem, request } from '../../utils/apiUtils';
 import { reactive } from 'vue';
-import { loadStripe } from '@stripe/stripe-js';
 
 import useUti from '../../utils/useUti';
 
-const stripePromise = loadStripe(
-  'pk_test_51IZipEIbg2Wdh6h2Czeqs7j35oIHGaPgFiWzjdR6mqdnX0Qwbx3PTPJEDYFXw6p8aM7lgRCSpnNRlhuKhzP6bepL00X7tqXf2a'
-);
+// import { loadStripe } from '@stripe/stripe-js';
+// const stripePromise = loadStripe(
+//   'pk_test_51IZipEIbg2Wdh6h2Czeqs7j35oIHGaPgFiWzjdR6mqdnX0Qwbx3PTPJEDYFXw6p8aM7lgRCSpnNRlhuKhzP6bepL00X7tqXf2a'
+// );
 
 export default {
   name: 'ItemDetail',
@@ -61,7 +61,7 @@ export default {
         });
     },
     async handleClick() {
-      let stripe = await stripePromise;
+      let stripe = await this.stripePromise;
       request
         .post('/stripe/create-checkout-session-single-vue', {
           id: this.itemId,
@@ -84,8 +84,8 @@ export default {
     });
   },
   setup() {
-    const { centToDollar } = useUti();
-    return { centToDollar };
+    const { centToDollar, stripePromise } = useUti();
+    return { centToDollar, stripePromise };
   },
 };
 </script>

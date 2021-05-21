@@ -35,8 +35,9 @@
 <script>
 import useCart from '../composables/cart';
 import { reactive } from 'vue';
-import { getItem } from '../utils/apiUtils';
+import { getItem, request } from '../utils/apiUtils';
 import useUti from '../utils/useUti';
+import { isEqual } from 'lodash';
 
 export default {
   name: 'Cart',
@@ -49,12 +50,10 @@ export default {
   components: {},
   setup() {
     const { addToCart, removeFromCart } = useCart();
-    const { centToDollar } = useUti();
-
-    return { addToCart, removeFromCart, centToDollar };
+    const { centToDollar, stripePromise } = useUti();
+    return { addToCart, removeFromCart, centToDollar, stripePromise };
   },
   methods: {
-    handleClick() {},
     fetchItems(cart) {
       let promiseArray = [];
       let results = [];
@@ -84,6 +83,35 @@ export default {
           return [];
         });
     },
+    isItemChanged(newV, cartDetails) {
+      // newV:{sampletest0:1}
+      // cardDetails:[{name:samepletest0,data:{},quanity:1}]
+      let oldV = {};
+      cartDetails.forEach((x) => {
+        oldV[x.name] = x.quantity;
+      });
+      return !isEqual(Object.keys(oldV), Object.keys(newV));
+    },
+
+    async handleClick() {
+      let new_line_items = this.cartDetails.map((x) => {
+        return { id: x.name.toLowerCase(), quantity: x.quantity };
+      });
+      let stripe = await this.stripePromise;
+      request
+        .post('/stripe/create-checkout-session-vue', {
+          items: new_line_items,
+        })
+        .then((session) => {
+          console.log(session);
+          return stripe.redirectToCheckout({
+            sessionId: session.id,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
   watch: {
     // This watch will detact the computted value of this.cart
@@ -96,9 +124,19 @@ export default {
     // },
     cart: {
       handler(newV) {
-        this.fetchItems(newV).then((res) => {
-          this.cartDetails = res;
-        });
+        // check if there is new items
+        // yes: refetch items
+        // no: modify quanity
+        if (this.isItemChanged(newV, this.cartDetails)) {
+          this.fetchItems(newV).then((res) => {
+            this.cartDetails = res;
+          });
+        } else {
+          // only change quanity
+          this.cartDetails.forEach((x) => {
+            x.quantity = newV[x.name];
+          });
+        }
       },
       deep: true,
       immediate: true,
