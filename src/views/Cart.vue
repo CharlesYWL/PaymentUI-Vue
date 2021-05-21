@@ -47,21 +47,9 @@ export default {
     };
   },
   components: {},
-  setup(props) {
+  setup() {
     const { addToCart, removeFromCart } = useCart();
     const { centToDollar } = useUti();
-
-    console.log(props.cart);
-    // const cartDetails = reactive([]);
-    // watchEffect(async () => {
-    //   cartDetails.values = await fetchItems(props.cart);
-    //   console.log(
-    //     'watch----props.cart:',
-    //     props.cart,
-    //     'cartDetails:',
-    //     cartDetails.values
-    //   );
-    // });
 
     return { addToCart, removeFromCart, centToDollar };
   },
@@ -88,12 +76,10 @@ export default {
             // this.cartDetails.push({ ...item, quantity: this.cart[item.name] });
             results.push({ ...item, quantity: cart[item.name] });
           });
-          console.log('fetchItems RS:', results);
           return results;
         })
         .catch((err) => {
           console.log(err);
-          console.log('fetchItems RS: empty');
 
           return [];
         });
@@ -115,14 +101,10 @@ export default {
         });
       },
       deep: true,
+      immediate: true,
     },
   },
-  mounted() {
-    this.fetchItems(this.cart).then((res) => {
-      console.log();
-      this.cartDetails = res;
-    });
-  },
+  mounted() {},
 };
 </script>
 
