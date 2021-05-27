@@ -11,7 +11,7 @@
           class="image"
         />
         <div class="description">
-          <h3>{{ item.name }}</h3>
+          <h3>{{ item.data.product_data.name }}</h3>
           <h5>{{ centToDollar(item.data.unit_amount) }}</h5>
         </div>
       </div>

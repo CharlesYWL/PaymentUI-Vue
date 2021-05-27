@@ -11,26 +11,30 @@
               :src="good.data.product_data.images[0]"
             />
           </template>
-          <template #title>
-            {{ good.name }}
-          </template>
+
           <template #content>
-            {{ centToDollar(good.data.unit_amount) }}
-          </template>
-          <template #footer>
-            <div class="buy-buttons">
-              <router-link
-                :to="{ name: 'ItemDetail', params: { itemId: good.name } }"
-                class="btn"
-              >
-                <Button icon="pi pi-shopping-cart" label="Buy Now" />
-              </router-link>
-              <Button
-                icon="pi pi-plus-circle"
-                label="Add to cart"
-                class="btn"
-                @click="$emit('addToCart', good.name)"
-              />
+            <div class="card-content">
+              <strong class="good-name">{{
+                good.data.product_data.name
+              }}</strong>
+
+              <p class="good-price">
+                {{ centToDollar(good.data.unit_amount) }}
+              </p>
+              <div class="buy-buttons">
+                <router-link
+                  :to="{ name: 'ItemDetail', params: { itemId: good.name } }"
+                  class="btn"
+                >
+                  <Button icon="pi pi-shopping-cart" label="Buy Now" />
+                </router-link>
+                <Button
+                  icon="pi pi-plus-circle"
+                  label="Add to cart"
+                  class="btn"
+                  @click="$emit('addToCart', good.name)"
+                />
+              </div>
             </div>
           </template>
         </Card>
@@ -100,13 +104,31 @@ p
     display: flex
     justify-content: center
     align-items: center
+    flex-wrap: wrap
 .good
   margin: 10px
-.buy-buttons
+  width: 300px
+  height: 420px
+.good-name
+  font-size:1.1rem
+  white-space: nowrap
+.good-price
+  padding: 0
+.card-content
   display: flex
   flex-direction: column
   justify-content: center
   align-items: center
+  padding: .5rem
+  width:100%
+  height:100%
+.buy-buttons
+  display: flex
+  flex-direction: row
+  justify-content: center
+  align-items: center
+  width:100%
+  justify-self: flex-end
 .btn
   width: fit-content
   margin: auto

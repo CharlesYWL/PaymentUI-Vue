@@ -3,7 +3,7 @@
     <img
       class="logo"
       alt="Vue logo"
-      src="../assets/logo.png"
+      src="../assets/Logo.png"
       @click="jumpTo('/')"
     />
 
@@ -12,6 +12,7 @@
         <router-link :to="path.url" class="navi-link">
           <Button
             type="button"
+            class="my-btn"
             :class="{ 'correct-path': isActive(path.url) }"
             :badge="path.name === 'Cart' ? cartNumber.toString() : ''"
             :label="path.name"

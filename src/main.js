@@ -8,6 +8,7 @@ import 'primevue/resources/themes/saga-blue/theme.css';
 import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
 import Button from 'primevue/button';
+import Divider from 'primevue/divider';
 
 //vue3-async-computed-
 // import * as AsyncComputed from 'vue3-async-computed';
@@ -18,4 +19,5 @@ createApp(App)
   .use(PrimeVue)
   // .use(asyncComputed)
   .component('Button', Button)
+  .component('Divider', Divider)
   .mount('#app');

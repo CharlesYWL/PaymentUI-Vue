@@ -42,4 +42,11 @@ export default {
 a {
   text-decoration: none;
 }
+.p-card-body {
+  padding: 0 !important;
+}
+.p-card-content {
+  padding: 0 !important;
+  height: 100% !important;
+}
 </style>
