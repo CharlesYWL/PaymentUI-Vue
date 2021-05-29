@@ -3,7 +3,7 @@
     <img
       class="logo"
       alt="Vue logo"
-      src="../assets/Logo.png"
+      src="@/assets/Logo.png"
       @click="jumpTo('/')"
     />
 
