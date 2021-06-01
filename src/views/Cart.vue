@@ -220,6 +220,8 @@ export default {
           background-color: rgba(0,0,0,.1)
           border-radius: 5px
     .item-bot-right
+        text-align: center
+
 .btn-icon
   height: 35px
   object-fit: scale-down

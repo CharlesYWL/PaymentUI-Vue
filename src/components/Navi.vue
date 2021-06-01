@@ -1,11 +1,6 @@
 <template>
   <div class="navi">
-    <img
-      class="logo"
-      alt="Vue logo"
-      src="@/assets/Logo.png"
-      @click="jumpTo('/')"
-    />
+    <img class="logo" alt="Vue logo" src="/img/Logo.png" @click="jumpTo('/')" />
 
     <div class="navi-option">
       <div v-for="path in naviOption" :key="path">
